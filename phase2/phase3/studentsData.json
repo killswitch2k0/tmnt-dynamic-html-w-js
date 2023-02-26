@@ -1,0 +1,26 @@
+[
+    {
+      "name":"Donatello",
+      "grade":100,
+      "color":"purple",
+      "icon":"../img/donatello.jpg"
+    },
+    {
+      "name":"Michaelangelo",
+      "grade":60,
+      "color":"orange",
+      "icon":"../img/michaelangelo.png"
+    },
+    {
+      "name":"Raphael",
+      "grade":80,
+      "color":"red",
+      "icon":"../img/raphael.png"
+    },
+    {
+      "name":"Leonardo",
+      "grade":70,
+      "color":"blue",
+      "icon":"../img/leonardo.png"
+    }
+  ]

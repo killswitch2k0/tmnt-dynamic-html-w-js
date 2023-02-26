@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Averages Phase2</title>
+    <style>
+        body {
+            padding: 1em;
+        }
+
+        table {
+            border: 1px solid;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Grade</th>
+                <th>Color</th>
+                <th>Icon</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Average</td>
+                <td>?</td>
+            </tr>
+        </tfoot>
+    </table>
+    <button>Calc Average</button>
+
+    <script>
+        // let studentsData = [
+        //     {name: 'Donatello', grade: 100, color: 'purple', icon: '../img/donatello.jpg'},
+        //     {name: 'Michaelangelo', grade: 60, color: 'orange', icon: '../img/michaelangelo.png'},
+        //     {name: 'Raphael', grade: 80, color: 'red', icon: '../img/raphael.png'},
+        //     {name: 'Leonardo', grade: 70, color: 'blue', icon: '../img/leonardo.png'}
+        // ];
+        
+        //rendering the tds using switch case
+        function getStudentColumn(studentsData, columnName) {
+                let td = document.createElement('td');
+
+                switch (columnName) {
+                    case 'name': 
+                        td.textContent = studentsData[columnName];
+                        td.style.fontFamily = 'cursive';
+                        break;
+                    case 'grade': 
+                        td.textContent = studentsData[columnName];
+                        td.style.fontFamily = 'monospace';
+                        break;
+                    case 'color': 
+                        td.style.backgroundColor = studentsData[columnName];
+                        break;
+                    case 'icon':
+                        let img = document.createElement('img');
+                        img.src = studentsData[columnName];
+                        img.height = 50;
+                        img.width = 50;
+                        td.append(img);
+                        break;
+                    default:
+                        td.textContent = studentsData[columnName];
+                        break;
+                }
+
+                
+                return td;
+        }
+
+
+        //dynamic colums without knowing the keys for the object
+        function getStudentColumns(studentsData) {
+            let columnNames = Object.keys(studentsData);
+
+            return columnNames.map(columnName => getStudentColumn(studentsData, columnName));
+        }
+
+
+
+        //function taht defines the rows and columns for each student
+        function getStudentRow(studentsData) {
+            let tr = document.createElement('tr');
+        
+        // manually
+            // let tdName = document.createElement('td');
+            // tdName.textContent = studentsData.name;
+
+            // let tdGrade = document.createElement('td');
+            // tdGrade.textContent = studentsData.grade;
+
+            // let tdColor = document.createElement('td')
+            // tdColor.style.backgroundColor = studentsData.color;
+
+            let  columns = getStudentColumns(studentsData);
+            tr.append(...columns);
+            return tr;
+        }
+   
+
+        //dynamically add rows to table
+        function getStudentsRows(studentsData) {
+            return studentsData.map((dataRow) => getStudentRow(dataRow));
+        }
+
+        //create the final table
+        function builTableBody(studentsData) {
+            let tbody = document.querySelector('tbody');
+            let rows = getStudentsRows(studentsData);
+            tbody.append(...rows);
+        }
+
+
+        //get students data dynamically
+        let remoteData = fetch('./phase3/studentsData.json');
+        remoteData
+            .then(response => { //wait on fetch() promise
+                console.log(response);
+                return response.json();
+            })
+            .then(studentsData => { //wait on jason() promise
+                console.log(studentsData);
+                builTableBody(studentsData)
+            });     
+
+
+
+
+        
+    </script>
+</body>
+
+</html>
