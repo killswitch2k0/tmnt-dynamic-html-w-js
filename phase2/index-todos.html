@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Todods dynamic table</title>
+    <style>
+        body {
+            padding: 1em;
+        }
+
+        table {
+            border: 1px solid;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>title</th>
+                <th>description</th>
+                <th>user</th>
+                <th>isDone</th>
+                <th>category</th>
+                <th>priority</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+        <!-- <tfoot>
+            <tr>
+                <td>Average</td>
+                <td>?</td>
+            </tr>
+        </tfoot> -->
+    </table>
+    <!-- <button>Calc Average</button> -->
+
+    <script>
+        // let todosData = [
+        //     {name: 'Donatello', grade: 100, color: 'purple', icon: '../img/donatello.jpg'},
+        //     {name: 'Michaelangelo', grade: 60, color: 'orange', icon: '../img/michaelangelo.png'},
+        //     {name: 'Raphael', grade: 80, color: 'red', icon: '../img/raphael.png'},
+        //     {name: 'Leonardo', grade: 70, color: 'blue', icon: '../img/leonardo.png'}
+        // ];
+        
+        //rendering the tds using switch case
+        function getStudentColumn(todosData, columnName) {
+                let td = document.createElement('td');
+
+                switch (columnName) {
+                    case 'name': 
+                        td.textContent = todosData[columnName];
+                        td.style.fontFamily = 'cursive';
+                        break;
+                    case 'grade': 
+                        td.textContent = todosData[columnName];
+                        td.style.fontFamily = 'monospace';
+                        break;
+                    case 'color': 
+                        td.style.backgroundColor = todosData[columnName];
+                        break;
+                    case 'icon':
+                        let img = document.createElement('img');
+                        img.src = todosData[columnName];
+                        img.height = 50;
+                        img.width = 50;
+                        td.append(img);
+                        break;
+                    default:
+                        td.textContent = todosData[columnName];
+                        break;
+                }
+
+                
+                return td;
+        }
+
+
+        //dynamic colums without knowing the keys for the object
+        function getStudentColumns(todosData) {
+            let columnNames = Object.keys(todosData);
+
+            return columnNames.map(columnName => getStudentColumn(todosData, columnName));
+        }
+
+
+
+        //function taht defines the rows and columns for each student
+        function getStudentRow(todosData) {
+            let tr = document.createElement('tr');
+        
+        // manually
+            // let tdName = document.createElement('td');
+            // tdName.textContent = todosData.name;
+
+            // let tdGrade = document.createElement('td');
+            // tdGrade.textContent = todosData.grade;
+
+            // let tdColor = document.createElement('td')
+            // tdColor.style.backgroundColor = todosData.color;
+
+            let  columns = getStudentColumns(todosData);
+            tr.append(...columns);
+            return tr;
+        }
+   
+
+        //dynamically add rows to table
+        function getStudentsRows(todosData) {
+            return todosData.map((todosDataRow) => getStudentRow(todosDataRow));
+        }
+
+        //create the final table
+        function builTableBody(todosData) {
+            let tbody = document.querySelector('tbody');
+            let rows = getStudentsRows(todosData);
+            tbody.append(...rows);
+        }
+
+
+        //get students todosData dynamically
+        let remotetodosData = fetch('./phase3/todosData.json');
+        remotetodosData
+            .then(response => { //wait on fetch() promise
+                console.log(response);
+                return response.json();
+            })
+            .then(todosData => { //wait on jason() promise
+                console.log(todosData);
+                builTableBody(todosData)
+            });     
+
+
+
+
+        
+    </script>
+</body>
+
+</html>

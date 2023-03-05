@@ -9,7 +9,7 @@
       "name":"Michaelangelo",
       "grade":60,
       "color":"orange",
-      "icon":"../img/michaelangelo.png"
+      "icon":"./img/michaelangelo.jpg"
     },
     {
       "name":"Raphael",
